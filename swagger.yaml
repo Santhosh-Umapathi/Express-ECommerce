@@ -1,0 +1,58 @@
+openapi: 3.0.3
+
+info:
+  title: Express ECommerce
+  description: ECommerce App made with Express Js & Mongo DB
+  version: 1.0.0
+  contact:
+    name: App City
+    email: support@app-city.co
+
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Local Development Environment
+
+  - url: "{protocol}://api.express-swagger.com/api/{version}"
+    description: Production Environment
+    variables:
+      version:
+        default: v1
+        enum:
+          - v1
+          - v2
+      protocol:
+        default: https
+        enum:
+          - http
+          - https
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /:
+    get:
+      tags:
+        - Home
+      summary: Get Home Values.
+      # responses:
+      #   "200":
+      #     description: Success, returns the object
+      #     content:
+      #       application/json:
+      #         schema:
+      #           type: object
+      #           properties:
+      #             username:
+      #               type: string
+      #             followers:
+      #               type: string
+      #             follows:
+      #               type: string
