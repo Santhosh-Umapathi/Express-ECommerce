@@ -1,4 +1,6 @@
 const cloudinary = require("cloudinary").v2;
+const crypto = require("crypto");
+
 //Middlewares
 const { BigPromise } = require("../middlewares");
 //Error
@@ -7,8 +9,11 @@ const { CustomError } = require("../error");
 //Model
 const { UserModel } = require("../models");
 //Utils
-const { cookieToken } = require("../utils");
+const { cookieToken, mail } = require("../utils");
 
+//------------------------------------------------------------------
+//MARK: Controllers
+//------------------------------------------------------------------
 const signUp = BigPromise(async (req, res, next) => {
   const { name, email, password } = req.body;
 
@@ -77,8 +82,94 @@ const logout = BigPromise(async (req, res, next) => {
   res.status(200).json({ success: true, message: "Logout Success" });
 });
 
+const forgotPassword = BigPromise(async (req, res, next) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return next(new CustomError("Email is required", 403));
+  }
+
+  const user = await UserModel.findOne({ email });
+
+  if (!user) {
+    return next(new CustomError("User not found", 401));
+  }
+
+  const forgotToken = user.getForgotPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/password/reset/${forgotToken}`;
+
+  const message = `Copy & Paste this link to reset password \n \n ${resetUrl}`;
+
+  try {
+    await mail({
+      message,
+      subject: "Reset your password",
+      resetUrl,
+      toEmail: email,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Email send successfully",
+    });
+  } catch (error) {
+    //Clear the values if email fails
+    user.forgotPasswordToken = undefined;
+    user.forgotPasswordExpiry = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(new CustomError(error.message, 500));
+  }
+});
+
+const resetPassword = BigPromise(async (req, res, next) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+
+  //Encrpyt the token again to compare
+  const encryptedToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  //Search for same encrypted token and check expiry
+  const user = await UserModel.findOne({
+    forgotPasswordToken: encryptedToken,
+    // forgotPasswordExpiry: { $gt: Date.now() },
+  });
+  console.log("🚀 --- resetPassword --- user", user);
+
+  if (!user) {
+    return next(new CustomError("Token is invalid or expired", 401));
+  }
+
+  //Compare password matches
+  if (password !== confirmPassword) {
+    return next(new CustomError("Passwords do not match", 401));
+  }
+
+  //Update the password
+  user.password = password;
+  //Reset the forgot fields
+  user.forgotPasswordToken = undefined;
+  user.forgotPasswordExpiry = undefined;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Password reset successful",
+  });
+});
+
 module.exports = {
   signUp,
   login,
   logout,
+  forgotPassword,
+  resetPassword,
 };
