@@ -46,6 +46,29 @@ const signUp = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
 });
 
+const login = BigPromise(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(new CustomError("All fields is required", 403));
+  }
+
+  const user = await UserModel.findOne({ email }).select("+password");
+
+  if (!user) {
+    return next(new CustomError("Email or Password incorrect", 401));
+  }
+
+  const isPasswordValid = await user.isValidPassword(password);
+  if (!isPasswordValid) {
+    return next(new CustomError("Email or Password incorrect", 401)); //Same error message to avoid attacks
+  }
+
+  //Create cookie and send response
+  cookieToken(user, res);
+});
+
 module.exports = {
   signUp,
+  login,
 };

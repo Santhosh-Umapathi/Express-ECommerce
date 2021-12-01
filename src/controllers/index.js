@@ -1,7 +1,8 @@
 const { home } = require("./homeController");
-const { signUp } = require("./userController");
+const { signUp, login } = require("./userController");
 
 module.exports = {
   home,
   signUp,
+  login,
 };
