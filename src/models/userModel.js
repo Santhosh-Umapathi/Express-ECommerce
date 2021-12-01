@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a Password"],
     minlength: [6, "Password should be atleast 6 chars"],
-    select: false, //does not return on the fetch from db
+    select: false, //does not return on the fetch from db (not working)
   },
   role: {
     type: String,
