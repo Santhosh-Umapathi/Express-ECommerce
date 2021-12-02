@@ -10,7 +10,13 @@ const {
   updateUser,
 } = require("./userController");
 
-const { getAllUsers, getUsers } = require("./adminController");
+const {
+  getAllUsers,
+  getUsers,
+  getOneUser,
+  adminUpdateUser,
+  adminDeleteOneUser,
+} = require("./adminController");
 
 module.exports = {
   home,
@@ -24,4 +30,7 @@ module.exports = {
   updateUser,
   getAllUsers,
   getUsers,
+  getOneUser,
+  adminUpdateUser,
+  adminDeleteOneUser,
 };
