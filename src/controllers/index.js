@@ -10,6 +10,8 @@ const {
   updateUser,
 } = require("./userController");
 
+const { getAllUsers, getUsers } = require("./adminController");
+
 module.exports = {
   home,
   signUp,
@@ -20,4 +22,6 @@ module.exports = {
   getLoggedInUserDetails,
   updatePassword,
   updateUser,
+  getAllUsers,
+  getUsers,
 };
