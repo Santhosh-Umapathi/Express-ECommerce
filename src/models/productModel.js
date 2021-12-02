@@ -29,12 +29,12 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [
       true,
-      "Please select a Category from - short-sleeves | long-sleeves | sweat-shirt | hoodies",
+      "Please select a Category from - shortsleeves | longsleeves | sweatshirt | hoodies",
     ],
     enum: {
-      values: ["short-sleeves", "long-sleeves", "sweat-shirt", "hoodies"],
+      values: ["shortsleeves", "longsleeves", "sweatshirt", "hoodies"],
       message:
-        "Please select a Category ONLY from - short-sleeves | long-sleeves | sweat-shirt | hoodies",
+        "Please select a Category ONLY from - shortsleeves | longsleeves | sweatshirt | hoodies",
     },
   },
   brand: {
