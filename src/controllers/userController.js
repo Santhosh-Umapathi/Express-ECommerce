@@ -157,6 +157,7 @@ const resetPassword = BigPromise(async (req, res, next) => {
   //Reset the forgot fields
   user.forgotPasswordToken = undefined;
   user.forgotPasswordExpiry = undefined;
+  console.log("🚀 --- resetPassword --- user", user);
 
   await user.save();
 
@@ -166,10 +167,20 @@ const resetPassword = BigPromise(async (req, res, next) => {
   });
 });
 
+const getLoggedInUserDetails = BigPromise(async (req, res, next) => {
+  const user = await UserModel.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
 module.exports = {
   signUp,
   login,
   logout,
   forgotPassword,
   resetPassword,
+  getLoggedInUserDetails,
 };

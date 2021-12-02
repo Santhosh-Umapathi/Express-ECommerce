@@ -33,7 +33,6 @@ const userSchema = new mongoose.Schema({
     secure_url: { type: String, required: true },
   },
   forgotPasswordToken: String,
-  forgotPasswordExpiry: Date,
   forgotPasswordExpiry: {
     type: Date,
     default: Date.now,
