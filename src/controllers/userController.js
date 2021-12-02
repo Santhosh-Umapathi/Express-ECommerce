@@ -141,7 +141,6 @@ const resetPassword = BigPromise(async (req, res, next) => {
     forgotPasswordToken: encryptedToken,
     // forgotPasswordExpiry: { $gt: Date.now() },
   });
-  console.log("🚀 --- resetPassword --- user", user);
 
   if (!user) {
     return next(new CustomError("Token is invalid or expired", 401));
@@ -176,6 +175,27 @@ const getLoggedInUserDetails = BigPromise(async (req, res, next) => {
   });
 });
 
+const updatePassword = BigPromise(async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const userId = req.user.id;
+
+  const user = await UserModel.findOne({ userId }).select("+password");
+  if (!user) {
+    return next(new CustomError("User not found", 401));
+  }
+  const isOldPasswordCorrect = await user.isValidPassword(oldPassword);
+  if (!isOldPasswordCorrect) {
+    return next(new CustomError("Password is incorrect", 401));
+  }
+
+  user.password = newPassword;
+
+  await user.save();
+
+  cookieToken(user, res);
+});
+
 module.exports = {
   signUp,
   login,
@@ -183,4 +203,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   getLoggedInUserDetails,
+  updatePassword,
 };

@@ -6,6 +6,7 @@ const {
   forgotPassword,
   resetPassword,
   getLoggedInUserDetails,
+  updatePassword,
 } = require("./userController");
 
 module.exports = {
@@ -16,4 +17,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   getLoggedInUserDetails,
+  updatePassword,
 };

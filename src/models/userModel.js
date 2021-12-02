@@ -33,10 +33,7 @@ const userSchema = new mongoose.Schema({
     secure_url: { type: String, required: true },
   },
   forgotPasswordToken: String,
-  forgotPasswordExpiry: {
-    type: Date,
-    default: Date.now,
-  },
+  forgotPasswordExpiry: Date,
 });
 
 //Runs before saving - Middleware for Mongoose

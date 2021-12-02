@@ -7,6 +7,7 @@ const {
   forgotPassword,
   resetPassword,
   getLoggedInUserDetails,
+  updatePassword,
 } = require("../controllers");
 //Middlewares
 const { isLoggedIn } = require("../middlewares");
@@ -20,5 +21,6 @@ userRoutes.get("/logout", logout);
 userRoutes.post("/forgotpassword", forgotPassword);
 userRoutes.post("/password/reset/:token", resetPassword);
 userRoutes.get("/userdashboard", isLoggedIn, getLoggedInUserDetails);
+userRoutes.post("/password/update", isLoggedIn, updatePassword);
 
 module.exports = userRoutes;
