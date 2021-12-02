@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 
 //Error Boundary
 app.use((error, req, res, next) => {
-  console.log("🚀 --- app.use --- error", error);
+  console.log("🚀 --- error boundary", error, error.message);
   res.status(error.code || 500);
   res.json({ message: error.message || "Unknown error occured" });
 });

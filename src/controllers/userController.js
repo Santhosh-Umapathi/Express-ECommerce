@@ -196,6 +196,46 @@ const updatePassword = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
 });
 
+const updateUser = BigPromise(async (req, res, next) => {
+  const { name, email } = req.body;
+
+  const userId = req.user.id;
+
+  const newData = {
+    name,
+    email,
+  };
+
+  let imageResult;
+  if (req.files) {
+    const res = await UserModel.findById(userId);
+    const imageId = res.photo.id;
+
+    //Delete existing image
+    const response = await cloudinary.uploader.destroy(imageId);
+    //Upload new image
+    let file = req.files.photo;
+    imageResult = await cloudinary.uploader.upload(file.tempFilePath, {
+      folder: "express-ecommerce/users",
+      width: 150,
+      crop: "scale",
+    });
+
+    newData.photo = {
+      id: imageResult?.public_id,
+      secure_url: imageResult?.secure_url,
+    };
+  }
+
+  const user = await UserModel.findByIdAndUpdate(userId, newData, {
+    runValidators: true,
+    new: true,
+    // useFindAndModify: false,
+  });
+
+  cookieToken(user, res);
+});
+
 module.exports = {
   signUp,
   login,
@@ -204,4 +244,5 @@ module.exports = {
   resetPassword,
   getLoggedInUserDetails,
   updatePassword,
+  updateUser,
 };
