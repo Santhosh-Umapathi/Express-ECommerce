@@ -18,6 +18,8 @@ const {
   adminDeleteOneUser,
 } = require("./adminController");
 
+const { testProduct } = require("./productController");
+
 module.exports = {
   home,
   signUp,
@@ -33,4 +35,5 @@ module.exports = {
   getOneUser,
   adminUpdateUser,
   adminDeleteOneUser,
+  testProduct,
 };

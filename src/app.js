@@ -14,7 +14,12 @@ const { API_ROUTE } = process.env;
 const { CustomError } = require("./error");
 
 //Routes
-const { homeRoutes, userRoutes, adminRoutes } = require("./routes");
+const {
+  homeRoutes,
+  userRoutes,
+  adminRoutes,
+  productRoutes,
+} = require("./routes");
 
 const app = express();
 // Parsers
@@ -41,6 +46,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(API_ROUTE, homeRoutes);
 app.use(API_ROUTE, userRoutes);
 app.use(API_ROUTE, adminRoutes);
+app.use(API_ROUTE, productRoutes);
 
 //Unsupported Routes
 app.use((req, res, next) => {
