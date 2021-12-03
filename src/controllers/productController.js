@@ -10,7 +10,6 @@ const { ProductModel } = require("../models");
 //Utils
 const { WhereClause } = require("../utils");
 
-//TODO: Issue, cannot add 2 products with same user, check
 const addProduct = BigPromise(async (req, res, next) => {
   let imagesArray = [];
   if (!req.files) {
@@ -47,10 +46,7 @@ const addProduct = BigPromise(async (req, res, next) => {
   req.body.photos = imagesArray; //Overrite photos field after image upload
   req.body.user = req.user.id;
 
-  console.log("req.body", req.body);
-
   const product = await ProductModel.create(req.body);
-  console.log("product", product);
 
   res.status(200).json({ success: true, product });
 });

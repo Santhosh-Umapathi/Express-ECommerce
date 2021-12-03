@@ -13,12 +13,7 @@ const { isLoggedIn, customRole } = require("../middlewares");
 const adminRoutes = express.Router();
 
 //Routes
-adminRoutes.get(
-  "/admin/users",
-  isLoggedIn,
-  customRole("admin", "manager"),
-  getAllUsers
-);
+adminRoutes.get("/admin/users", isLoggedIn, customRole("admin"), getAllUsers);
 //Method 1
 adminRoutes
   .route("/admin/users/:id")
@@ -44,6 +39,11 @@ adminRoutes
 //   adminUpdateUser
 // );
 
-adminRoutes.get("/manager/users", isLoggedIn, customRole("manager"), getUsers);
+adminRoutes.get(
+  "/manager/users",
+  isLoggedIn,
+  customRole("admin", "manager"),
+  getUsers
+);
 
 module.exports = adminRoutes;
