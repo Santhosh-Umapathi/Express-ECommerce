@@ -1,5 +1,4 @@
 const cloudinary = require("cloudinary").v2;
-const crypto = require("crypto");
 
 //Middlewares
 const { BigPromise } = require("../middlewares");
@@ -7,14 +6,57 @@ const { BigPromise } = require("../middlewares");
 const { CustomError } = require("../error");
 
 //Model
-const { UserModel } = require("../models");
+const { ProductModel } = require("../models");
 //Utils
-const { cookieToken, mail } = require("../utils");
+const { WhereClause } = require("../utils");
 
-const testProduct = BigPromise(async (req, res, next) => {
-  res.status(200).json({ success: true, message: "test Product" });
+const addProduct = BigPromise(async (req, res, next) => {
+  let imagesArray = [];
+  if (!req.files) {
+    return next(new CustomError("Images are required", 401));
+  }
+
+  for (let key in req.files.photos) {
+    let result = await cloudinary.uploader.upload(
+      req.files.photos[key].tempFilePath,
+      { folder: "express-ecommerce/products" }
+    );
+
+    imagesArray.push({
+      id: result?.public_id,
+      secure_url: result?.secure_url,
+    });
+  }
+
+  req.body.photos = imagesArray; //Overrite photos field after image upload
+  req.body.user = req.user.id;
+
+  const product = await ProductModel.create(req.body);
+
+  res.status(200).json({ success: true, product });
+});
+
+const getAllProducts = BigPromise(async (req, res, next) => {
+  const pageLimit = 6;
+  const totalProductCount = await ProductModel.countDocuments();
+
+  const productsObject = new WhereClause(ProductModel.find(), req.query)
+    .search()
+    .filter();
+
+  let products = await productsObject.base.clone();
+
+  productsObject.pagination(pageLimit);
+  products = await productsObject.base; //Running the final query
+
+  const filteredProductCount = products.length;
+
+  res
+    .status(200)
+    .json({ success: true, products, filteredProductCount, totalProductCount });
 });
 
 module.exports = {
-  testProduct,
+  addProduct,
+  getAllProducts,
 };

@@ -18,7 +18,7 @@ const {
   adminDeleteOneUser,
 } = require("./adminController");
 
-const { testProduct } = require("./productController");
+const { addProduct, getAllProducts } = require("./productController");
 
 module.exports = {
   home,
@@ -35,5 +35,6 @@ module.exports = {
   getOneUser,
   adminUpdateUser,
   adminDeleteOneUser,
-  testProduct,
+  addProduct,
+  getAllProducts,
 };
