@@ -10,17 +10,33 @@ const { ProductModel } = require("../models");
 //Utils
 const { WhereClause } = require("../utils");
 
+//TODO: Issue, cannot add 2 products with same user, check
 const addProduct = BigPromise(async (req, res, next) => {
   let imagesArray = [];
   if (!req.files) {
     return next(new CustomError("Images are required", 401));
   }
 
-  for (let key in req.files.photos) {
-    let result = await cloudinary.uploader.upload(
-      req.files.photos[key].tempFilePath,
-      { folder: "express-ecommerce/products" }
-    );
+  //Image Upload
+  if (req.files.photos.length > 0) {
+    let result;
+    //Multiple Image Upload
+    for (let key in req.files.photos) {
+      result = await cloudinary.uploader.upload(
+        req.files.photos[key].tempFilePath,
+        { folder: "express-ecommerce/products" }
+      );
+
+      imagesArray.push({
+        id: result?.public_id,
+        secure_url: result?.secure_url,
+      });
+    }
+  } else {
+    //Single Image Upload
+    result = await cloudinary.uploader.upload(req.files.photos.tempFilePath, {
+      folder: "express-ecommerce/products",
+    });
 
     imagesArray.push({
       id: result?.public_id,
@@ -31,7 +47,10 @@ const addProduct = BigPromise(async (req, res, next) => {
   req.body.photos = imagesArray; //Overrite photos field after image upload
   req.body.user = req.user.id;
 
+  console.log("req.body", req.body);
+
   const product = await ProductModel.create(req.body);
+  console.log("product", product);
 
   res.status(200).json({ success: true, product });
 });
