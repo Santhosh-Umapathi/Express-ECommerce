@@ -28,6 +28,8 @@ const {
   deleteReview,
 } = require("./productController");
 
+const paymentController = require("./paymentController");
+
 module.exports = {
   home,
   signUp,
@@ -50,4 +52,5 @@ module.exports = {
   adminDeleteProduct,
   addReview,
   deleteReview,
+  paymentController,
 };

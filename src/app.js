@@ -19,6 +19,7 @@ const {
   userRoutes,
   adminRoutes,
   productRoutes,
+  paymentRoutes,
 } = require("./routes");
 
 const app = express();
@@ -47,6 +48,7 @@ app.use(API_ROUTE, homeRoutes);
 app.use(API_ROUTE, userRoutes);
 app.use(API_ROUTE, adminRoutes);
 app.use(API_ROUTE, productRoutes);
+app.use(API_ROUTE, paymentRoutes);
 
 //Unsupported Routes
 app.use((req, res, next) => {
