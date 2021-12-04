@@ -29,6 +29,7 @@ const {
 } = require("./productController");
 
 const paymentController = require("./paymentController");
+const orderController = require("./orderController");
 
 module.exports = {
   home,
@@ -53,4 +54,5 @@ module.exports = {
   addReview,
   deleteReview,
   paymentController,
+  orderController,
 };
