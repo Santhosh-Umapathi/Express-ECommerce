@@ -7,7 +7,7 @@ const { BigPromise } = require("../middlewares");
 const { CustomError } = require("../error");
 
 //Model
-const { UserModel } = require("../models");
+const { UserModel, ProductModel } = require("../models");
 //Utils
 const { cookieToken, mail } = require("../utils");
 
