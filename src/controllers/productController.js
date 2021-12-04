@@ -173,10 +173,98 @@ const adminDeleteProduct = BigPromise(async (req, res, next) => {
   });
 });
 
+const addReview = BigPromise(async (req, res, next) => {
+  const { rating, comment, productId } = req.body;
+
+  let product = await ProductModel.findById(productId);
+
+  if (!product) {
+    return next(new CustomError("Product not found", 404));
+  }
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    comment,
+    rating: Number(rating),
+  };
+
+  //Check if already reviewed
+  const isAlreadyReviewed = product.reviews.find(
+    (i) => i.user.toString() === req.user._id.toString()
+  );
+
+  if (isAlreadyReviewed) {
+    //Update existing Review
+
+    product.reviews.forEach((element) => {
+      if (element.user.toString() === req.user._id.toString()) {
+        element.comment = comment;
+        element.rating = Number(rating);
+      }
+    });
+  } else {
+    //New Review
+    product.reviews.push(review);
+    product.numberOfReviews = product.reviews.length;
+  }
+
+  //Calculate Rating
+  product.ratings =
+    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    product.reviews.length;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+const deleteReview = BigPromise(async (req, res, next) => {
+  const { productId } = req.query;
+
+  let product = await ProductModel.findById(productId);
+
+  if (!product) {
+    return next(new CustomError("Product not found", 404));
+  }
+
+  //Delete review
+  const reviews = product.reviews.filter(
+    (i) => i.user.toString() !== req.user._id.toString()
+  );
+
+  const numberOfReviews = reviews.length;
+
+  //Calculate Rating
+  const ratings =
+    reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length;
+
+  await ProductModel.findByIdAndUpdate(
+    productId,
+    {
+      reviews,
+      ratings: isNaN(ratings) ? 0 : ratings,
+      numberOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
 module.exports = {
   addProduct,
   getAllProducts,
   adminGetProduct,
   adminUpdateProduct,
   adminDeleteProduct,
+  addReview,
+  deleteReview,
 };

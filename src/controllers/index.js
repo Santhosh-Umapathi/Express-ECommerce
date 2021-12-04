@@ -24,6 +24,8 @@ const {
   adminGetProduct,
   adminUpdateProduct,
   adminDeleteProduct,
+  addReview,
+  deleteReview,
 } = require("./productController");
 
 module.exports = {
@@ -46,4 +48,6 @@ module.exports = {
   adminGetProduct,
   adminUpdateProduct,
   adminDeleteProduct,
+  addReview,
+  deleteReview,
 };

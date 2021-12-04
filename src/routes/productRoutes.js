@@ -6,6 +6,8 @@ const {
   adminGetProduct,
   adminUpdateProduct,
   adminDeleteProduct,
+  addReview,
+  deleteReview,
 } = require("../controllers");
 //Middlewares
 const { isLoggedIn, customRole } = require("../middlewares");
@@ -14,6 +16,10 @@ const productRoutes = express.Router();
 
 //Routes
 productRoutes.get("/products", getAllProducts);
+productRoutes
+  .route("/products/review")
+  .put(isLoggedIn, addReview)
+  .delete(isLoggedIn, deleteReview);
 
 productRoutes.post(
   "/admin/products/add",
