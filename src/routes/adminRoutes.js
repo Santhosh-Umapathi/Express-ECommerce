@@ -1,11 +1,13 @@
 const express = require("express");
 //Controllers
 const {
-  getAllUsers,
-  getUsers,
-  getOneUser,
-  adminUpdateUser,
-  adminDeleteOneUser,
+  adminController: {
+    getAllUsers,
+    getUsers,
+    getOneUser,
+    adminUpdateUser,
+    adminDeleteOneUser,
+  },
 } = require("../controllers");
 //Middlewares
 const { isLoggedIn, customRole } = require("../middlewares");

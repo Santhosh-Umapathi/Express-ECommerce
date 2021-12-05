@@ -1,10 +1,10 @@
 const express = require("express");
 //Controllers
-const { home } = require("../controllers");
+const { homeController } = require("../controllers");
 
 const homeRoutes = express.Router();
 
 //Routes
-homeRoutes.get("/", home);
+homeRoutes.get("/", homeController);
 
 module.exports = homeRoutes;

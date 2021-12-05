@@ -7,4 +7,4 @@ const home = BigPromise(async (req, res) => {
   });
 });
 
-module.exports = { home };
+module.exports = home;

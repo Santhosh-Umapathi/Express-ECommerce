@@ -1,14 +1,16 @@
 const express = require("express");
 //Controllers
 const {
-  signUp,
-  login,
-  logout,
-  forgotPassword,
-  resetPassword,
-  getLoggedInUserDetails,
-  updatePassword,
-  updateUser,
+  userController: {
+    signUp,
+    login,
+    logout,
+    forgotPassword,
+    resetPassword,
+    getLoggedInUserDetails,
+    updatePassword,
+    updateUser,
+  },
 } = require("../controllers");
 //Middlewares
 const { isLoggedIn } = require("../middlewares");

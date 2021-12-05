@@ -3,7 +3,7 @@ const BigPromise = require("./BigPromise");
 const { UserModel } = require("../models");
 const { CustomError } = require("../error");
 
-exports.isLoggedIn = BigPromise(async (req, res, next) => {
+const isLoggedIn = BigPromise(async (req, res, next) => {
   const token =
     req.cookies?.token ||
     req.header("Authorization")?.replace("Bearer ", "") ||
@@ -19,3 +19,5 @@ exports.isLoggedIn = BigPromise(async (req, res, next) => {
 
   next();
 });
+
+module.exports = isLoggedIn;
