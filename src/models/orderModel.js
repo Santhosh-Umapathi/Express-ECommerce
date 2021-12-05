@@ -86,6 +86,10 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  stock: {
+    type: Number,
+    required: [true, "Please provide a Stock number"],
+  },
 });
 
 module.exports = mongoose.model(COLLECTION_NAME, orderSchema);
