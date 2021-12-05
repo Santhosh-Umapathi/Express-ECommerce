@@ -1,0 +1,805 @@
+{
+	"info": {
+		"_postman_id": "ff665839-32ec-497d-bde8-bc0910af2ecf",
+		"name": "Express-ECommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "admin@admin.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/Users/santhosh-umapathi/Pictures/3d3366b19620954a7880edb5dfd6bab4.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Domain}}/signup",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"admin@admin.com\",\n    \"password\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/login",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"test@test.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/forgotpassword",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"forgotpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"112233\",\n    \"confirmPassword\":\"112233\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/password/reset/3e7cf1f67b9df46e0bf158f20f7f94864a06f6aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"password",
+								"reset",
+								"3e7cf1f67b9df46e0bf158f20f7f94864a06f6aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\":\"112233\",\n    \"newPassword\":\"111111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/password/update",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"password",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@test.com",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/Users/santhosh-umapathi/Pictures/App City.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Domain}}/userdashboard/update",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"userdashboard",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/logout",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/userdashboard",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"userdashboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get All Users - Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/users",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One User- Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/users/61aa38b13bbad37c4c641efa",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"61aa38b13bbad37c4c641efa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update One User- Admin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"test5\",\n    \"email\":\"test3@test.com\",\n    \"role\":\"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/admin/users/61a8f1449e28729b9d6128bd",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"61a8f1449e28729b9d6128bd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete One User- Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/users/61a8f1449e28729b9d6128bd",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"61a8f1449e28729b9d6128bd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users - Manager",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/manager/users",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"manager",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/products",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Review",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\":\"Nice product\",\n    \"rating\": 3,\n    \"productId\": \"61aa39703bbad37c4c641f0a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/products/review",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"products",
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\":\"Nice product\",\n    \"rating\": 4,\n    \"productId\": \"61aa39703bbad37c4c641f0a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/products/review?productId=61aa39703bbad37c4c641f0a",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"products",
+								"review"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "61aa39703bbad37c4c641f0a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product - Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/products/61aa39703bbad37c4c641f0a",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"products",
+								"61aa39703bbad37c4c641f0a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "classic i write code3",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "5.99",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "classic tshirt for coders3",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "longsleeves",
+									"type": "text"
+								},
+								{
+									"key": "brand",
+									"value": "lco",
+									"type": "text"
+								},
+								{
+									"key": "photos",
+									"type": "file",
+									"src": "/Users/santhosh-umapathi/Pictures/3d3366b19620954a7880edb5dfd6bab4.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Domain}}/admin/products/add",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"products",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Admin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "classic i write code3",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "classic tshirt for coders OLD",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "longsleeves",
+									"type": "text"
+								},
+								{
+									"key": "brand",
+									"value": "BPO",
+									"type": "text"
+								},
+								{
+									"key": "photos",
+									"type": "file",
+									"src": "/Users/santhosh-umapathi/Pictures/3d3366b19620954a7880edb5dfd6bab4.jpg"
+								},
+								{
+									"key": "stock",
+									"value": "20",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Domain}}/admin/products/61aa39703bbad37c4c641f0a",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"products",
+								"61aa39703bbad37c4c641f0a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product - Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/products/61aa39703bbad37c4c641f0a",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"products",
+								"61aa39703bbad37c4c641f0a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Get Stripe Key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/stripe/key",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"stripe",
+								"key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Capture Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\":300\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/stripe/payment",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"stripe",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"shippingInfo\": {\n    \"address\": \"1 Jaipur\",\n    \"city\": \"Jaipur\",\n    \"phoneNo\": \"9898989898\",\n    \"zip\": \"302020\",\n    \"state\": \"Rajasthan\",\n    \"country\": \"India\"\n  },\n  \"orderItems\": [\n    {\n      \"name\": \"Pro Coder tshirts\",\n      \"quantity\": 1,\n      \"image\": \"https://res.cloudinary.com/dk92l1yoc/image/upload/v1635757229/products/b4laryk4dbp6vdrvq3wv.png\",\n      \"price\": 999,\n      \"product\": \"617facb5333fd4c0fdfdee65\"\n    }\n  ],\n  \"paymentInfo\": {\n    \"id\": \"testString\"\n  },\n  \"taxAmount\": 40,\n  \"shippingAmount\": 10,\n  \"totalAmount\": 100\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/order/create",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/order/61ac4bb05c66d6f1f8745499",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"order",
+								"61ac4bb05c66d6f1f8745499"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/order/myorders",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"order",
+								"myorders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders - Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/order",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order- Admin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderStatus\":\"out for shipping\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Domain}}/admin/order/61aba0a56783b4763ead7884",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"order",
+								"61aba0a56783b4763ead7884"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order- Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Domain}}/admin/order/61aba0a56783b4763ead7884",
+							"host": [
+								"{{Domain}}"
+							],
+							"path": [
+								"admin",
+								"order",
+								"61aba0a56783b4763ead7884"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unsupported Route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Domain}}/api",
+					"host": [
+						"{{Domain}}"
+					],
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Domain",
+			"value": "http://localhost:5000/api/v1"
+		}
+	]
+}
